@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>mahasscboard.in - SSC Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        table { border-collapse: collapse; margin: 0 auto; }
+        th, td { border: 1px solid black; padding: 8px 12px; }
+    </style>
+</head>
+<body>
+    <h1>SSC Board 12th Result</h1>
+    <label>Seat Number: <input type="text" id="seatNo"></label><br><br>
+    <label>Mother's Name: <input type="text" id="motherName"></label><br><br>
+    <button onclick="checkResult()">Submit</button>
+
+    <script>
+        function checkResult() {
+            const seatNo = document.getElementById('seatNo').value.trim().toUpperCase();
+            const motherName = document.getElementById('motherName').value.trim().toLowerCase();
+
+            if (seatNo === 'M007277' && motherName === 'maison ara shaikh') {
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write(`
+                    <html>
+                    <head>
+                        <title>SSC Result - ${seatNo}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; text-align: center; margin: 30px; }
+                            table { border-collapse: collapse; margin: 20px auto; }
+                            th, td { border: 1px solid black; padding: 8px 12px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h2>Student Result</h2>
+                        <p><strong>Student Name:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
+                        <p><strong>Seat No:</strong> M007277</p>
+                        <p><strong>Division:</strong> MUMBAI</p>
+                        <table>
+                            <tr><th>Subject Code</th><th>Subject Name</th><th>Marks Obtained</th></tr>
+                            <tr><td>03</td><td>MARATHI</td><td>044</td></tr>
+                            <tr><td>04</td><td>HINDI</td><td>051</td></tr>
+                            <tr><td>17</td><td>ENGLISH</td><td>049</td></tr>
+                            <tr><td>71</td><td>MATHEMATICS</td><td>068</td></tr>
+                            <tr><td>72</td><td>SCIENCE & TECHNOLOGY</td><td>063</td></tr>
+                            <tr><td>73</td><td>SOCIAL SCIENCE</td><td>072</td></tr>
+                        </table>
+                        <br>
+                        <table>
+                            <tr><th>Percentage</th><td>60.0%</td><th>Total Marks</th><td>303</td></tr>
+                            <tr><th>Result</th><td>PASS</td><th>Out Of</th><td>500</td></tr>
+                        </table>
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert('Invalid seat number or mother\'s name.');
+            }
+        }
+    </script>
+</body>
+</html>
