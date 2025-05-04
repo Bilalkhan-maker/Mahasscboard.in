@@ -22,28 +22,20 @@
     <div id="result"></div>
 
     <script>
-        // Script for checking seat number and mother's name
+        function normalize(str) {
+            return str.trim().toLowerCase().replace(/\s+/g, ' ');
+        }
+
         document.getElementById("resultForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
 
-            // Get the input values
-            var seatNo = document.getElementById("seatNo").value.trim().toLowerCase();
-            var motherName = document.getElementById("motherName").value.trim().toLowerCase();
+            var seatNo = normalize(document.getElementById("seatNo").value);
+            var motherName = normalize(document.getElementById("motherName").value);
 
-            // Stored correct values (all lower case, no spaces)
-            var correctSeatNo = "m007277";
-            var correctMotherName = "maisoon ara shaikh";
+            var correctSeatNo = normalize("M007277");
+            var correctMotherName = normalize("Maisoon Ara Shaikh");
 
-            // Normalize the input (ignore spaces and case)
-            seatNo = seatNo.replace(/\s+/g, '');
-            motherName = motherName.replace(/\s+/g, '');
-
-            // Check if the seat number and mother's name are close enough
-            var seatNoMatch = seatNo === correctSeatNo;
-            var motherNameMatch = motherName === correctMotherName;
-
-            // Show result or error message
-            if (seatNoMatch && motherNameMatch) {
+            if (seatNo === correctSeatNo && motherName === correctMotherName) {
                 document.getElementById("result").innerHTML = `
                     <h2>Student Details:</h2>
                     <p><strong>Student Name:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
