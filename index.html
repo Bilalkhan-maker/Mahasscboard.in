@@ -1,62 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>mahasscboard.in - SSC Result</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        table { border-collapse: collapse; margin: 0 auto; }
-        th, td { border: 1px solid black; padding: 8px 12px; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Result</title>
 </head>
 <body>
-    <h1>SSC Board 12th Result</h1>
-    <label>Seat Number: <input type="text" id="seatNo"></label><br><br>
-    <label>Mother's Name: <input type="text" id="motherName"></label><br><br>
-    <button onclick="checkResult()">Submit</button>
+
+    <h1>SSC Result Check</h1>
+
+    <form id="resultForm">
+        <label for="seatNo">Seat Number:</label><br>
+        <input type="text" id="seatNo" name="seatNo" required><br><br>
+        
+        <label for="motherName">Mother's Name:</label><br>
+        <input type="text" id="motherName" name="motherName" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="result"></div>
 
     <script>
-        function checkResult() {
-            const seatNo = document.getElementById('seatNo').value.trim().toUpperCase();
-            const motherName = document.getElementById('motherName').value.trim().toLowerCase();
-
-            if (enteredSeatNo.toLowerCase() === 'M007277' && === enteredMotherName.toLowerCase() 'maison ara shaikh') {
-                const newWindow = window.open('', '_blank');
-                newWindow.document.write(`
-                    <html>
-                    <head>
-                        <title>SSC Result - ${seatNo}</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; text-align: center; margin: 30px; }
-                            table { border-collapse: collapse; margin: 20px auto; }
-                            th, td { border: 1px solid black; padding: 8px 12px; }
-                        </style>
-                    </head>
-                    <body>
-                        <h2>Student Result</h2>
-                        <p><strong>Student Name:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
-                        <p><strong>Seat No:</strong> M007277</p>
-                        <p><strong>Division:</strong> MUMBAI</p>
-                        <table>
-                            <tr><th>Subject Code</th><th>Subject Name</th><th>Marks Obtained</th></tr>
-                            <tr><td>03</td><td>MARATHI</td><td>044</td></tr>
-                            <tr><td>04</td><td>HINDI</td><td>051</td></tr>
-                            <tr><td>17</td><td>ENGLISH</td><td>049</td></tr>
-                            <tr><td>71</td><td>MATHEMATICS</td><td>068</td></tr>
-                            <tr><td>72</td><td>SCIENCE & TECHNOLOGY</td><td>063</td></tr>
-                            <tr><td>73</td><td>SOCIAL SCIENCE</td><td>072</td></tr>
-                        </table>
-                        <br>
-                        <table>
-                            <tr><th>Percentage</th><td>60.0%</td><th>Total Marks</th><td>303</td></tr>
-                            <tr><th>Result</th><td>PASS</td><th>Out Of</th><td>500</td></tr>
-                        </table>
-                    </body>
-                    </html>
-                `);
-            } else {
-                alert('Invalid seat number or mother\'s name.');
+        // Function to calculate Levenshtein Distance (string similarity)
+        function levenshtein(a, b) {
+            var tmp;
+            var i, j, alen = a.length, blen = b.length;
+            var row = Array(alen);
+            var max = alen > blen ? alen : blen;
+            if (alen === 0) { return blen; }
+            if (blen === 0) { return alen; }
+            for (i = 0; i < alen; i++) { row[i] = i; }
+            for (i = 0; i < blen; i++) {
+                tmp = i;
+                for (j = 0; j < alen; j++) {
+                    row[j] = tmp = a[j] === b[i] ? tmp : Math.min(tmp + 1, Math.min(row[j] + 1, row[j + 1] + 1));
+                }
             }
+            return tmp;
         }
+
+        // Script for checking seat number and mother's name
+        document.getElementById("resultForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the input values
+            var seatNo = document.getElementById("seatNo").value.trim();
+            var motherName = document.getElementById("motherName").value.trim().toLowerCase(); // case-insensitive
+
+            // Stored correct values
+            var correctSeatNo = "M007277";
+            var correctMotherName = "maisoon ara shaikh";
+
+            // Tolerance threshold for Levenshtein Distance (allowing small typos)
+            var seatNoThreshold = 2; // Allow up to 2 typos in seat number
+            var motherNameThreshold = 3; // Allow up to 3 typos in mother's name
+
+            // Levenshtein Distance check for seat number and mother's name
+            var seatNoDistance = levenshtein(seatNo.toLowerCase(), correctSeatNo.toLowerCase());
+            var motherNameDistance = levenshtein(motherName, correctMotherName.toLowerCase());
+
+            if (seatNoDistance <= seatNoThreshold && motherNameDistance <= motherNameThreshold) {
+                document.getElementById("result").innerHTML = `
+                    <h2>Student Details:</h2>
+                    <p><strong>Student Name:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
+                    <p><strong>Seat No:</strong> M007277</p>
+                    <p><strong>Division:</strong> MUMBAI</p>
+
+                    <table border="1">
+                        <tr><th>Subject Code</th><th>Subject Name</th><th>Marks Obtained</th></tr>
+                        <tr><td>04</td><td>HINDI</td><td>051</td></tr>
+                        <tr><td>03</td><td>MARATHI</td><td>044</td></tr>
+                        <tr><td>17</td><td>ENGLISH</td><td>049</td></tr>
+                        <tr><td>71</td><td>MATHEMATICS</td><td>068</td></tr>
+                        <tr><td>72</td><td>SCIENCE & TECHNOLOGY</td><td>063</td></tr>
+                        <tr><td>73</td><td>SOCIAL SCIENCE</td><td>072</td></tr>
+                    </table>
+
+                    <p><strong>Percentage:</strong> 60.0%</p>
+                    <p><strong>Total Marks Obtained:</strong> 303</p>
+                    <p><strong>Result:</strong> Pass</p>
+                    <p><strong>Out of:</strong> 500</p>
+                `;
+            } else {
+                alert("Incorrect Seat Number or Mother's Name.");
+            }
+        });
     </script>
+
 </body>
 </html>
