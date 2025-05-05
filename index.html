@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSC Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fff; color: #000; padding: 20px; }
+        .result-box { border: 1px solid #ccc; padding: 20px; max-width: 500px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: center; }
+        .highlight { background-color: #e7f8e7; font-weight: bold; }
+        .header { margin-bottom: 20px; }
+    </style>
 </head>
 <body>
 
@@ -19,7 +27,6 @@
         <button type="submit">Submit</button>
     </form>
 
-    <div id="debug" style="color: red; margin-top: 20px;"></div>
     <div id="result"></div>
 
     <script>
@@ -30,41 +37,40 @@
         document.getElementById("resultForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            var seatNo = normalize(document.getElementById("seatNo").value);
-            var motherName = normalize(document.getElementById("motherName").value);
+            var seatNoInput = normalize(document.getElementById("seatNo").value);
+            var motherNameInput = normalize(document.getElementById("motherName").value);
 
             var correctSeatNo = normalize("M007277");
             var correctMotherName = normalize("Maisoon Ara Shaikh");
 
-            // Show debug info
-            document.getElementById("debug").innerHTML = `
-                <p>User seatNo: "${seatNo}"</p>
-                <p>Expected seatNo: "${correctSeatNo}"</p>
-                <p>User motherName: "${motherName}"</p>
-                <p>Expected motherName: "${correctMotherName}"</p>
-            `;
-
-            if (seatNo === correctSeatNo && motherName === correctMotherName) {
+            if (seatNoInput === correctSeatNo && motherNameInput === correctMotherName) {
                 document.getElementById("result").innerHTML = `
-                    <h2>Student Details:</h2>
-                    <p><strong>Student Name:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
-                    <p><strong>Seat No:</strong> M007277</p>
-                    <p><strong>Division:</strong> MUMBAI</p>
+                    <div class="result-box">
+                        <div class="header">
+                            <p><strong>STUDENT NAME:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
+                            <p><strong>SEAT NO:</strong> M007277</p>
+                            <p><strong>DIVISION:</strong> MUMBAI</p>
+                        </div>
 
-                    <table border="1">
-                        <tr><th>Subject Code</th><th>Subject Name</th><th>Marks Obtained</th></tr>
-                        <tr><td>04</td><td>HINDI</td><td>051</td></tr>
-                        <tr><td>03</td><td>MARATHI</td><td>044</td></tr>
-                        <tr><td>17</td><td>ENGLISH</td><td>049</td></tr>
-                        <tr><td>71</td><td>MATHEMATICS</td><td>068</td></tr>
-                        <tr><td>72</td><td>SCIENCE & TECHNOLOGY</td><td>063</td></tr>
-                        <tr><td>73</td><td>SOCIAL SCIENCE</td><td>072</td></tr>
-                    </table>
+                        <table>
+                            <tr>
+                                <th>SUBJECT CODE</th>
+                                <th>SUBJECT NAME</th>
+                                <th>MARKS OBTAINED</th>
+                            </tr>
+                            <tr><td>03</td><td>ENGLISH (1ST LANG)</td><td>071</td></tr>
+                            <tr><td>16</td><td>MARATHI (2/3 LANG)</td><td>046</td></tr>
+                            <tr><td>15</td><td>HINDI (2/3 LANG)</td><td>065</td></tr>
+                            <tr><td>71</td><td>MATHEMATICS</td><td>048</td></tr>
+                            <tr><td>72</td><td>SCIENCE & TECHNOLOGY</td><td>044</td></tr>
+                            <tr><td>73</td><td>SOCIAL SCIENCES</td><td>058</td></tr>
+                            <tr class="highlight"><td colspan="2">TOTAL</td><td>288/500</td></tr>
+                            <tr class="highlight"><td colspan="2">PERCENTAGE</td><td>57.60%</td></tr>
+                            <tr class="highlight"><td colspan="2">RESULT</td><td>PASS</td></tr>
+                        </table>
 
-                    <p><strong>Percentage:</strong> 60.0%</p>
-                    <p><strong>Total Marks Obtained:</strong> 303</p>
-                    <p><strong>Result:</strong> Pass</p>
-                    <p><strong>Out of:</strong> 500</p>
+                        <p style="font-size: smaller; margin-top: 10px;">£ - Indicates total marks and Percentage calculated on "Best of 5" rule.</p>
+                    </div>
                 `;
             } else {
                 alert("Incorrect Seat Number or Mother's Name.");
