@@ -3,38 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSC Result</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #fff; color: #000; padding: 20px; }
-        .result-box { border: 1px solid #ccc; padding: 20px; max-width: 500px; margin: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #000; padding: 8px; text-align: center; }
-        .highlight { background-color: #e7f8e7; font-weight: bold; }
-        .header { margin-bottom: 20px; }
-    </style>
-</head>
-<body>
-
-    <h1>SSC Result Check</h1>
-
-    <form id="resultForm">
-        <label for="seatNo">Seat Number:</label><br>
-        <input type="text" id="seatNo" name="seatNo" required><br><br>
-        
-        <label for="motherName">Mother's Name:</label><br>
-        <input type="text" id="motherName" name="motherName" required><br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <div id="result"></div>
-
+    <title>SSC Result Check</title>
     <script>
         function normalize(str) {
             return str.trim().toLowerCase().replace(/\s+/g, ' ');
         }
 
-        document.getElementById("resultForm").addEventListener("submit", function(event) {
+        function checkResult(event) {
             event.preventDefault();
 
             var seatNoInput = normalize(document.getElementById("seatNo").value);
@@ -44,39 +19,22 @@
             var correctMotherName = normalize("Maisoon Ara Shaikh");
 
             if (seatNoInput === correctSeatNo && motherNameInput === correctMotherName) {
-                document.getElementById("result").innerHTML = `
-                    <div class="result-box">
-                        <div class="header">
-                            <p><strong>STUDENT NAME:</strong> KHAN MOHAMMED BILAL JAHANGIR</p>
-                            <p><strong>SEAT NO:</strong> M007277</p>
-                            <p><strong>DIVISION:</strong> MUMBAI</p>
-                        </div>
-
-                        <table>
-                            <tr>
-                                <th>SUBJECT CODE</th>
-                                <th>SUBJECT NAME</th>
-                                <th>MARKS OBTAINED</th>
-                            </tr>
-                            <tr><td>03</td><td>ENGLISH (1ST LANG)</td><td>071</td></tr>
-                            <tr><td>16</td><td>MARATHI (2/3 LANG)</td><td>046</td></tr>
-                            <tr><td>15</td><td>HINDI (2/3 LANG)</td><td>065</td></tr>
-                            <tr><td>71</td><td>MATHEMATICS</td><td>048</td></tr>
-                            <tr><td>72</td><td>SCIENCE & TECHNOLOGY</td><td>044</td></tr>
-                            <tr><td>73</td><td>SOCIAL SCIENCES</td><td>058</td></tr>
-                            <tr class="highlight"><td colspan="2">TOTAL</td><td>288/500</td></tr>
-                            <tr class="highlight"><td colspan="2">PERCENTAGE</td><td>57.60%</td></tr>
-                            <tr class="highlight"><td colspan="2">RESULT</td><td>PASS</td></tr>
-                        </table>
-
-                        <p style="font-size: smaller; margin-top: 10px;">£ - Indicates total marks and Percentage calculated on "Best of 5" rule.</p>
-                    </div>
-                `;
+                // Redirect to result page
+                window.location.href = "result.html";
             } else {
                 alert("Incorrect Seat Number or Mother's Name.");
             }
-        });
+        }
     </script>
-
+</head>
+<body>
+    <h1>SSC Result Check</h1>
+    <form onsubmit="checkResult(event)">
+        <label>Seat Number:</label><br>
+        <input type="text" id="seatNo" required><br><br>
+        <label>Mother's Name:</label><br>
+        <input type="text" id="motherName" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
