@@ -19,6 +19,7 @@
         <button type="submit">Submit</button>
     </form>
 
+    <div id="debug" style="color: red; margin-top: 20px;"></div>
     <div id="result"></div>
 
     <script>
@@ -34,6 +35,14 @@
 
             var correctSeatNo = normalize("M007277");
             var correctMotherName = normalize("Maisoon Ara Shaikh");
+
+            // Show debug info
+            document.getElementById("debug").innerHTML = `
+                <p>User seatNo: "${seatNo}"</p>
+                <p>Expected seatNo: "${correctSeatNo}"</p>
+                <p>User motherName: "${motherName}"</p>
+                <p>Expected motherName: "${correctMotherName}"</p>
+            `;
 
             if (seatNo === correctSeatNo && motherName === correctMotherName) {
                 document.getElementById("result").innerHTML = `
